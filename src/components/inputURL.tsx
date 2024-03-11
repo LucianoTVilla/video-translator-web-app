@@ -6,11 +6,11 @@ export default function InputURL() {
   const [videoUrl, setVideoUrl] = useState('');
   const [error, setError] = useState('');
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: { target: { value: SetStateAction<string>; }; }) => {
     setVideoUrl(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
 
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
