@@ -4,13 +4,21 @@ import { SetStateAction, useState } from "react";
 
 export default function InputURL() {
   const [videoUrl, setVideoUrl] = useState('');
+  const [error, setError] = useState('');
 
-  const handleInputChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+  const handleInputChange = (event) => {
     setVideoUrl(event.target.value);
   };
 
-  const handleSubmit = async (event: { preventDefault: () => void; }) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+    if (!videoUrl.match(urlRegex)) {
+      setError('Invalid URL. Please enter a valid URL.');
+      return;
+    }
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video`, {
@@ -24,10 +32,8 @@ export default function InputURL() {
       if (!response.ok) {
         throw new Error('Failed to create video');
       }
-
-      const data = await response.json();
-
       setVideoUrl('');
+      setError('');
     } catch (error) {
       console.error('Error creating video:', error);
     }
@@ -46,9 +52,11 @@ export default function InputURL() {
               onChange={handleInputChange}
             />
           </label>
+          {error && <div className="text-red-500">{error}</div>}
           <button type="submit" className="btn btn-primary mt-2">Submit</button>
         </form>
       </div>
     </div>
   )
 }
+
