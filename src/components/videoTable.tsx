@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { FiPlay, FiDownload } from 'react-icons/fi';
 
+import { useAppContext } from "@/context";
+
 interface Video {
   _id: string;
   url: string;
@@ -17,9 +19,11 @@ export default function VideoTable() {
   const [audioUrl, setAudioUrl] = useState<string>("");
   const [firstFrameUrl, setFirstFrameUrl] = useState<string>("");
 
+  const { loading }  = useAppContext();
+
   useEffect(() => {
     fetchVideos();
-  }, []);
+  }, [loading]);
 
   const fetchVideos = async () => {
     try {
