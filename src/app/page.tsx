@@ -1,5 +1,5 @@
 import React from 'react';
-import InputURL from '@/components/InputURL';
+import InputURL from '@/components/inputURL';
 import VideoTable from '@/components/videoTable';
 
 export default function Home() {
