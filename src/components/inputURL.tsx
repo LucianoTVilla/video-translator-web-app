@@ -13,7 +13,7 @@ export default function InputURL() {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/video', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
